@@ -1,7 +1,7 @@
 NAME = tatatype
 
 CC = gcc
-CFLAG = -Wall -Wextra -Werror
+CFLAG = -g -lncurses
 
 AR = ar
 ARFLAG = -crs
@@ -22,13 +22,11 @@ LF = \e[1K\r$(NO_COLOR)
 CRLF = \n$(LF)
 
 SRCS  = $(wildcard $(SRCS_DIR)/*.c)
-
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SRCS:.c=.o)))
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	# $(MAKE) -C ./lib/ft_printf all
 	@printf "$(LF)$(LIGHT_GREEN)Successfully Created $(GREEN)$(NAME)'s Object files!"
 	@printf "$(CRLF)$(LIGHT_GREEN)Archiving! $(GREEN)$@${CRLF}"
 	$(CC) $(CFLAG) $(OBJS) -I $(INCLUDES_DIR) -o $(NAME)
@@ -42,7 +40,6 @@ $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)
 
 clean :
-	# @$(MAKE) -C ./lib/ft_printf clean
 	@${RM} $(RMFLAG) $(OBJS) $(OBJS_DIR)
 	@printf "$(LF)$(LIGHT_GREEN)Cleaning $(GREEN)$(NAME)'s Object files...${CRLF}"
 
