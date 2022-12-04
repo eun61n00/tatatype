@@ -11,9 +11,17 @@
 #include <time.h>
 #include <pthread.h>
 
-void speed_test();
+typedef struct word_node {
+	int row;
+	int col;
+	char *string;
+	int *color;
+	struct word_node *next;
+} word_node;
+
 void game();
-char *return_random_sentence_ko(int idx);
-char *return_random_sentence_en(int idx);
+word_node *make_game_board();
+char *random_word();
+word_node *make_word_node_list();
 
 #endif

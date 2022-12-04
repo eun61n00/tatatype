@@ -1,7 +1,8 @@
 NAME = tatatype
+PLAYER = player
 
 CC = gcc
-CFLAG = -g -lncurses
+CFLAG = -g -lcurses
 
 AR = ar
 ARFLAG = -crs
@@ -21,10 +22,13 @@ LIGHT_GRAY = \e[1;32;255;121;198
 LF = \e[1K\r$(NO_COLOR)
 CRLF = \n$(LF)
 
-SRCS  = $(wildcard $(SRCS_DIR)/*.c)
-OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SRCS:.c=.o)))
+SRCS = $(SRCS_DIR)/main.c $(SRCS_DIR)/make_game_board.c $(SRCS_DIR)/word_node_list.c
+OBJS = $(OBJS_DIR)/main.o $(OBJS_DIR)/make_game_board.o $(OBJS_DIR)/word_node_list.o
 
-all : $(NAME)
+PlAYER_SRCS = $(SRCS_DIR)/player.c
+PlAYER_OBJS = $(OBJS_DIR)/player.o
+
+all : $(NAME) $(PLAYER)
 
 $(NAME) : $(OBJS)
 	@printf "$(LF)$(LIGHT_GREEN)Successfully Created $(GREEN)$(NAME)'s Object files!"
@@ -32,19 +36,21 @@ $(NAME) : $(OBJS)
 	$(CC) $(CFLAG) $(OBJS) -I $(INCLUDES_DIR) -o $(NAME)
 	@printf "$(LF)$(LIGHT_GREEN)Successfully Archived $(GREEN)$@$(LIGHT_GREEN)!${CRLF}"
 
-$(OBJS_DIR)/%.o:$(SRCS_DIR)/%.c | $(OBJS_DIR)
+$(PLAYER) :
+	$(CC) $(PlAYER_SRCS) -o $(PLAYER)
+	@printf "$(LF)$(LIGHT_GREEN)Successfully Archived $(GREEN)$@$(LIGHT_GREEN)!${CRLF}"
+
+$(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
+	mkdir -p $(OBJS_DIR)
 	$(CC) $(CFLAG) -c $^ -o $@ -I $(INCLUDES_DIR)
 	@printf "$(LF)$(LIGHT_GREEN)Create $(GREEN)$@ $(LIGHT_GREEN)from $(GREEN)$<${CRLF}"
-
-$(OBJS_DIR):
-	mkdir -p $(OBJS_DIR)
 
 clean :
 	@${RM} $(RMFLAG) $(OBJS) $(OBJS_DIR)
 	@printf "$(LF)$(LIGHT_GREEN)Cleaning $(GREEN)$(NAME)'s Object files...${CRLF}"
 
 fclean : clean
-	@${RM} $(RMFLAG) $(NAME)
+	@${RM} $(RMFLAG) $(NAME) $(PLAYER)
 	@printf "$(LF)$(LIGHT_GREEN)Cleaning $(GREEN)$(NAME)${CRLF}"
 
 re : fclean all
