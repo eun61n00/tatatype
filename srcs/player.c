@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 		char input[256];
 	} msg;
 
-	fprintf(stdout, "========== Player1 ==========\n");
+	fprintf(stdout, "========== Player ==========\n");
 	if ((msg_qid = msgget(DEFINED_KEY, IPC_CREAT | 0666)) < 0) {
 		perror("msgget: ");
 		exit(-1);

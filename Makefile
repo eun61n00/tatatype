@@ -1,4 +1,4 @@
-NAME = tatatype
+NAME = type
 PLAYER = player
 
 CC = gcc

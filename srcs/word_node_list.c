@@ -5,7 +5,18 @@ word_node	*ft_lstnew();
 word_node	*ft_lstlast(word_node *lst);
 void	ft_lstadd_back(word_node **lst, word_node *new);
 
+int	already_exist(word_node *word_list, word_node *word) {
+	word_node *tmp = word_list;
+	while (tmp && tmp->next) {
+		if (tmp->string == word->string)
+			return 1;
+	}
+	return 0;
+}
+
 char *random_word() {
+	int random_number;
+
 	char *words[] = { "useless", "alone", "athwart", "lest", "blah",
 					"as long as", "cruelly", "punctually", "until", "strand",
 					"since", "naturally", "regret", "mmm", "as though", "in order that",
@@ -23,8 +34,7 @@ char *random_word() {
 					"gadzooks", "memorable", "unfortunately", "bamboo", "because", "jaunty",
 					"since", "sure-footed", "vivaciously"
 	};
-	// printf("%d\n", rand() % 100);
-	// printf("%s\n", words[rand() % 100]);
+
 	return words[rand() % 100];
 }
 
@@ -35,7 +45,12 @@ word_node	*make_word_node_list() {
 
 	ret = ft_lstnew();
 	for (i = 0; i < 100; i++) {
+		printf("test");
 		tmp = ft_lstnew();
+		// while (already_exist(ret, tmp) == 1) {
+		// 	free(tmp);
+		// 	tmp = ft_lstnew();
+		// }
 		ft_lstadd_back(&ret, tmp);
 	}
 	return ret;

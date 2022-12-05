@@ -1,7 +1,10 @@
 #include "../includes/tatatype.h"
+#include <stdbool.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
+#include <time.h>
 
 #define DEFINED_KEY 0x19101969
 
@@ -25,13 +28,13 @@ int	define_player(int msg_qid)
 }
 
 void game_header() {
-	mvaddstr(1, 1, "******************************************************");
-	mvaddstr(2, 1, "*                                                    *");
-	mvaddstr(3, 1, "*                   TYPING GAME                      *");
-	mvaddstr(4, 1, "*                                                    *");
-	mvaddstr(5, 1, "*                       developed by Eunbin Kwon     *");
-	mvaddstr(6, 1, "******************************************************");
-	mvaddstr(7, 1, "Press Enter key to start game");
+	mvaddstr(1, 1, "************************************************************************************");
+	mvaddstr(2, 1, "*                                                                                  *");
+	mvaddstr(3, 1, "*                                  TYPING GAME                                     *");
+	mvaddstr(4, 1, "*                                                                                  *");
+	mvaddstr(5, 1, "*                                                     developed by Eunbin Kwon     *");
+	mvaddstr(6, 1, "************************************************************************************");
+	// mvaddstr(7, 1, "Press Enter key to start game");
 }
 
 void find_word(char *msg_input, word_node *node_list, int player)
@@ -55,18 +58,45 @@ void find_word(char *msg_input, word_node *node_list, int player)
 	return ;
 }
 
+void display_score(word_node *node_list)
+{
+	int p1_score, p2_score = 0;
+	word_node *tmp;
+
+	tmp = node_list;
+	while (tmp && tmp->next) {
+		if (tmp->color == 0)
+			p1_score++;
+		else
+			p2_score++;
+	}
+
+	if (p1_score > p2_score) {
+		mvaddstr(35, 35, "PLAYER1 WIN");
+		refresh();
+	}
+	else {
+		mvaddstr(35, 35, "PLAYER2 WIN");
+		refresh();
+	}
+}
+
 void game()
 {
+	time_t start, end;
 	int msg_qid;
 	int player;
+	int p1_score, p2_score = 0;
 	struct {
 		long mtype;
 		char input[256];
 	} msg;
-	word_node *node_list;
+	word_node *node_list, *tmp;
 	struct msqid_ds m_stat;
+	char buf[80];
 
-	mvaddstr(10, 70, "username");
+	time(&start);
+	// mvaddstr(10, 70, "username");
 
 	// TODO print remaining time and score
 
@@ -78,7 +108,8 @@ void game()
 		exit(-1);
 	}
 
-	while (TRUE) {
+	while (true) {
+
 		memset(msg.input, 0x0, 256);
 		if (msgrcv(msg_qid, &msg, 256, 0, 0) < 0) {
 			perror("msgrcv: ");
@@ -101,12 +132,14 @@ void game()
 		refresh();
 		find_word(msg.input, node_list, player);
 		refresh();
+		time(&end);
 	}
 }
 
 int main(void)
 {
 	int option;
+	time_t start;
 
 	initscr();
 	clear();
@@ -124,4 +157,5 @@ int main(void)
 	// }
 	endwin();
 	exit(0);
+
 }

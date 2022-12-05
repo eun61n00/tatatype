@@ -15,7 +15,7 @@ typedef struct word_node {
 	int row;
 	int col;
 	char *string;
-	int *color;
+	int color;
 	struct word_node *next;
 } word_node;
 
