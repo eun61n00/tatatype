@@ -1,4 +1,4 @@
-#include "../includes/tatatype.h"
+#include "../includes/type.h"
 
 word_node *make_game_board() {
 	int row, col;

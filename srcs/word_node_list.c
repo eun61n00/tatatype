@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "../includes/tatatype.h"
+#include "../includes/type.h"
 
 word_node	*ft_lstnew();
 word_node	*ft_lstlast(word_node *lst);

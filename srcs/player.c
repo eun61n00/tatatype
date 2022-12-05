@@ -1,7 +1,7 @@
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
-#include "../includes/tatatype.h"
+#include "../includes/type.h"
 
 #define DEFINED_KEY 0x19101969
 

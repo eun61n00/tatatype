@@ -22,8 +22,8 @@ LIGHT_GRAY = \e[1;32;255;121;198
 LF = \e[1K\r$(NO_COLOR)
 CRLF = \n$(LF)
 
-SRCS = $(SRCS_DIR)/main.c $(SRCS_DIR)/make_game_board.c $(SRCS_DIR)/word_node_list.c
-OBJS = $(OBJS_DIR)/main.o $(OBJS_DIR)/make_game_board.o $(OBJS_DIR)/word_node_list.o
+SRCS = $(SRCS_DIR)/main.c $(SRCS_DIR)/make_game_board.c $(SRCS_DIR)/word_node_list.c $(SRCS_DIR)/game.c
+OBJS = $(OBJS_DIR)/main.o $(OBJS_DIR)/make_game_board.o $(OBJS_DIR)/word_node_list.o $(OBJS_DIR)/game.o
 
 PlAYER_SRCS = $(SRCS_DIR)/player.c
 PlAYER_OBJS = $(OBJS_DIR)/player.o
